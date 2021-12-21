@@ -1,41 +1,27 @@
+import Card from './components/Card'; 
+import Header from './components/Header'; 
+import Drawer from './components/Drawer'; 
+
+const sneakersInfo = [
+  {title: "Мужские Кроссовки Nike Blazer Mid Suede", price: 12999, imgUrl: "img/1.jpg"},
+  {title: "Мужские Кроссовки Nike Air Max 270", price: 12999, imgUrl: "img/2.jpg"},
+  {title: "Мужские Кроссовки Nike Blazer Mid Suede", price: 8999, imgUrl: "img/3.jpg"},
+  {title: "Кроссовки Puma X Aka Boku Future Rider", price: 8999, imgUrl: "img/4.jpg"},
+];
+
 function App() {
   return (
     <div className="wrapper">
 
-      <header className="header">
-        <div className="header__inner">
-          <a className="logo" href="/">
-            <img className="logo__image" src="img/logo.svg" alt="Logo react Sneakers" width={245} height={41}/>
-          </a>
-          <div className="header__user">
-            <button className="header__btn header__btn--cart" aria-label="Link on cart">
-              <svg className="header__icon">
-                <use xlinkHref="img/sprite.svg#cart"></use>
-              </svg>
-              {/* <span className="header__text">
-                1205 руб.
-              </span> */}
-            </button>
-            <button className="header__btn header__btn--fav" aria-label="Link on favorite">
-              <svg className="header__icon">
-                <use xlinkHref="img/sprite.svg#fav"></use>
-              </svg>
-            </button>
-            <button className="header__btn header__btn--acc" aria-label="Link on login">
-              <svg className="header__icon">
-                <use xlinkHref="img/sprite.svg#user"></use>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </header>
+      <Header />
+      <Drawer />
 
       <main className="content">
         <h1 className="sr-only">
           REACT SNEAKERS - Магазин лучших кроссовок
         </h1>
 
-        <div className="content__top">
+        <div className="content__top d-flex align-center justify-between">
           <h2 className="content__title">
             Все кроссовки
           </h2>
@@ -45,115 +31,14 @@ function App() {
           </label>
         </div>
 
-        <ul className="content__block">
-          <li className="content__item">
-            <article className="card">
-              <div className="card__img">
-                <img src="img/1.jpg" alt="Мужские Кроссовки Nike Blazer Mid Suede" width={133} height={112} />
-              </div>
-              <h3 className="card__title">
-                Мужские Кроссовки Nike Blazer Mid Suede
-              </h3>
-              <span className="card__price">
-                Цена:
-              </span>
-              <span className="card__price-text">
-                12999 руб.
-              </span>
-
-              <button className="card__btn card__btn--fav" aria-label="Add to favorites">
-                <svg className="card__icon card__icon--fav">
-                  <use xlinkHref="img/sprite.svg#fav2"></use>
-                </svg>
-              </button>
-              <button className="card__btn card__btn--add" aria-label="Add to cart">
-                <svg className="card__icon card__icon--add">
-                  <use xlinkHref="img/sprite.svg#plus"></use>
-                </svg>
-              </button>
-            </article>
-          </li>
-          <li className="content__item">
-            <article className="card">
-              <div className="card__img">
-                <img src="img/1.jpg" alt="Мужские Кроссовки Nike Blazer Mid Suede" width={133} height={112} />
-              </div>
-              <h3 className="card__title">
-                Мужские Кроссовки Nike Blazer Mid Suede
-              </h3>
-              <span className="card__price">
-                Цена:
-              </span>
-              <span className="card__price-text">
-                12999 руб.
-              </span>
-
-              <button className="card__btn card__btn--fav" aria-label="Add to favorites">
-                <svg className="card__icon card__icon--fav">
-                  <use xlinkHref="img/sprite.svg#fav2"></use>
-                </svg>
-              </button>
-              <button className="card__btn card__btn--add" aria-label="Add to cart">
-                <svg className="card__icon card__icon--add">
-                  <use xlinkHref="img/sprite.svg#plus"></use>
-                </svg>
-              </button>
-            </article>
-          </li>
-          <li className="content__item">
-            <article className="card">
-              <div className="card__img">
-                <img src="img/1.jpg" alt="Мужские Кроссовки Nike Blazer Mid Suede" width={133} height={112} />
-              </div>
-              <h3 className="card__title">
-                Мужские Кроссовки Nike Blazer Mid Suede
-              </h3>
-              <span className="card__price">
-                Цена:
-              </span>
-              <span className="card__price-text">
-                12999 руб.
-              </span>
-
-              <button className="card__btn card__btn--fav" aria-label="Add to favorites">
-                <svg className="card__icon card__icon--fav">
-                  <use xlinkHref="img/sprite.svg#fav2"></use>
-                </svg>
-              </button>
-              <button className="card__btn card__btn--add" aria-label="Add to cart">
-                <svg className="card__icon card__icon--add">
-                  <use xlinkHref="img/sprite.svg#plus"></use>
-                </svg>
-              </button>
-            </article>
-          </li>
-          <li className="content__item">
-            <article className="card">
-              <div className="card__img">
-                <img src="img/1.jpg" alt="Мужские Кроссовки Nike Blazer Mid Suede" width={133} height={112} />
-              </div>
-              <h3 className="card__title">
-                Мужские Кроссовки Nike Blazer Mid Suede
-              </h3>
-              <span className="card__price">
-                Цена:
-              </span>
-              <span className="card__price-text">
-                12999 руб.
-              </span>
-
-              <button className="card__btn card__btn--fav" aria-label="Add to favorites">
-                <svg className="card__icon card__icon--fav">
-                  <use xlinkHref="img/sprite.svg#fav2"></use>
-                </svg>
-              </button>
-              <button className="card__btn card__btn--add" aria-label="Add to cart">
-                <svg className="card__icon card__icon--add">
-                  <use xlinkHref="img/sprite.svg#plus"></use>
-                </svg>
-              </button>
-            </article>
-          </li>
+        <ul className="content__block">          
+          {sneakersInfo.map(obj => 
+            <Card 
+              title={obj.title} 
+              price={obj.price} 
+              imgUrl={obj.imgUrl} 
+              onClick={() => {console.log(obj)}} />
+          )}
         </ul>
       </main>
 
