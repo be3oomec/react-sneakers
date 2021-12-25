@@ -1,6 +1,6 @@
 import styles from './Header.scss'
 
-function Header() {
+function Header(props) {
   return (
     <header className="header">
       <div className="header__inner d-flex align-center justify-between">
@@ -9,7 +9,9 @@ function Header() {
         </a>
 
         <div className="header__user d-flex align-start">
-          <button className="header__btn header__btn--cart d-flex align-end" aria-label="Link on cart">
+          <button className="header__btn header__btn--cart d-flex align-end" 
+                  aria-label="Link on cart" 
+                  onClick={props.onClickCart}>
             <svg className="header__icon">
               <use xlinkHref="img/sprite.svg#cart"></use>
             </svg>

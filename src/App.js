@@ -1,20 +1,40 @@
+import React from 'react';
+ 
 import Card from './components/Card'; 
 import Header from './components/Header'; 
 import Drawer from './components/Drawer'; 
 
-const sneakersInfo = [
-  {title: "Мужские Кроссовки Nike Blazer Mid Suede", price: 12999, imgUrl: "img/1.jpg"},
-  {title: "Мужские Кроссовки Nike Air Max 270", price: 12999, imgUrl: "img/2.jpg"},
-  {title: "Мужские Кроссовки Nike Blazer Mid Suede", price: 8999, imgUrl: "img/3.jpg"},
-  {title: "Кроссовки Puma X Aka Boku Future Rider", price: 8999, imgUrl: "img/4.jpg"},
-];
 
 function App() {
+
+  const [shoes, setShoes] = React.useState([]);
+  const [cartItems, setCartItems] = React.useState([]);
+  const [cartOpened, setCartOpened] = React.useState(false);
+
+  React.useEffect(() => { 
+    fetch("https://61c721e79031850017547308.mockapi.io/shoes")
+      .then(res => { return res.json();})
+      .then(json => { setShoes(json);});
+  }, []);
+  
+  React.useEffect(() => {
+    if (cartOpened) {
+      document.body.style.overflow = "hidden";
+    }
+    else {
+      document.body.style.overflow = "";
+    }
+  }, [cartOpened]);
+
+  const onAddToCart = (obj) => {
+    setCartItems(prev => [...prev, obj]);
+  };
+  
   return (
     <div className="wrapper">
 
-      <Header />
-      <Drawer />
+      <Header onClickCart={() => setCartOpened(true)}/>
+      {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} />}
 
       <main className="content">
         <h1 className="sr-only">
@@ -32,12 +52,14 @@ function App() {
         </div>
 
         <ul className="content__block">          
-          {sneakersInfo.map(obj => 
+          {shoes.map(obj => 
             <Card 
               title={obj.title} 
               price={obj.price} 
-              imgUrl={obj.imgUrl} 
-              onClick={() => {console.log(obj)}} />
+              imgUrl={obj.imgUrl}
+              addToCart={(obj) => onAddToCart(obj)}
+              addToFav={() => console.log("Добавили в избранное")}
+            />
           )}
         </ul>
       </main>

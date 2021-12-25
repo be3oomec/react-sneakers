@@ -68,14 +68,6 @@
   top: 30px;
   left: 30px;
 
-  &:focus {
-    background-color: #FEF0F0;
-
-    .card__icon--fav {
-      fill: #fff;
-    }
-  }
-
   &:hover {
     background-color: #FEF0F0;
 
@@ -83,13 +75,13 @@
       fill: #fff;
     }
   }
+}
 
-  &:active {
-    background-color: #FEF0F0;
+.card__btn--fav-active {
+  background-color: #FEF0F0;
 
-    .card__icon--fav {
-      fill: #FF8585;
-    }
+  .card__icon--fav {
+    fill: #FF8585;
   }
 }
 
@@ -97,14 +89,6 @@
   bottom: 30px;
   right: 30px;
 
-  &:focus {
-    background-color: #89F09C;
-
-    .card__icon--add {
-      fill: #fff;
-    }
-  }
-
   &:hover {
     background-color: #89F09C;
 
@@ -112,13 +96,13 @@
       fill: #fff;
     }
   }
+}
 
-  &:active {
-    background-color: #3CC755;
+.card__btn--cheaked {
+  background-color: #3CC755;
 
-    .card__icon--add {
-      fill: #fff;
-    }
+  .card__icon--add {
+    fill: #fff;
   }
 }
 

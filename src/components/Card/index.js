@@ -1,30 +1,48 @@
+import React, {useState} from 'react';
+
 import styles from './Card.scss';
 
-function Card(props) {
+function Card({imgUrl, title, price, addToFav, addToCart}) {
+
+  const [added, setAdded] = useState(false);
+  const [favorites, setFavorites] = useState(false);
+
+  const onClickPlus = () => {
+    addToCart({title, price, imgUrl});
+    setAdded(!added);
+  };
+
+  const onClickFav = () => {
+    addToFav();
+    setFavorites(!favorites);
+  };
+
   return (
     <li className="content__item">
       <article className="card">
         <div className="card__img">
-          <img src={props.imgUrl} alt={props.title} width={133} height={112} />
+          <img src={imgUrl} alt={title} width={133} height={112} />
         </div>
         <h3 className="card__title">
-          {props.title}
+          {title}
         </h3>
         <span className="card__price">
           Цена:
         </span>
         <span className="card__price-text">
-          {props.price} руб.
+          {price} руб.
         </span>
 
-        <button className="card__btn card__btn--fav" aria-label="Add to favorites">
+        <button className={favorites ? "card__btn card__btn--fav card__btn--fav-active" : "card__btn card__btn--fav"} aria-label="Add to favorites" 
+                onClick={onClickFav}>
           <svg className="card__icon card__icon--fav">
             <use xlinkHref="img/sprite.svg#fav2"></use>
           </svg>
         </button>
-        <button className="card__btn card__btn--add" aria-label="Add to cart" onClick={props.onClick}>
+        <button className={added ? "card__btn card__btn--add card__btn--cheaked" : "card__btn card__btn--add"} aria-label="Add to cart" 
+                onClick={onClickPlus}>
           <svg className="card__icon card__icon--add">
-            <use xlinkHref="img/sprite.svg#plus"></use>
+            <use xlinkHref={added ? "img/sprite.svg#check" : "img/sprite.svg#plus"}></use>
           </svg>
         </button>
       </article>

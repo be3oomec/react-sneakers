@@ -8,7 +8,6 @@
   bottom: 0;
   background-color: rgba(#000, 0.5);
   z-index: 100;
-  display: none;
 }
 
 .drawer {
@@ -75,6 +74,7 @@
 
 .drawer__items {
   flex: 1 1 auto;
+  overflow: auto;
 }
 
 .drawer__total,
