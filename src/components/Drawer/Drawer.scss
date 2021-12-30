@@ -75,6 +75,16 @@
 .drawer__items {
   flex: 1 1 auto;
   overflow: auto;
+
+  &:not(:last-child) {
+    margin-bottom: 30px;
+  }
+}
+
+.drawer__item {
+  &:not(:last-child) {
+    margin-bottom: 30px;
+  }
 }
 
 .drawer__total,

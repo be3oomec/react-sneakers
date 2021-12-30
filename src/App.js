@@ -1,20 +1,37 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import axios from 'axios';
  
-import Card from './components/Card'; 
 import Header from './components/Header'; 
 import Drawer from './components/Drawer'; 
+
+import Home from './pages/Home'; 
+import Favorites from './pages/Favorites'; 
 
 
 function App() {
 
   const [shoes, setShoes] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
+  const [favorites, setFavorites] = React.useState([]);
+  const [searchValue, setSearchValue] = React.useState('');
   const [cartOpened, setCartOpened] = React.useState(false);
+  const [isReady, setIsReady] = React.useState(true);
 
-  React.useEffect(() => { 
-    fetch("https://61c721e79031850017547308.mockapi.io/shoes")
-      .then(res => { return res.json();})
-      .then(json => { setShoes(json);});
+  React.useEffect(() => {
+    async function fetchData() {
+      const shoesResponse = await axios.get("https://61c721e79031850017547308.mockapi.io/shoes");
+      const cartResponse = await axios.get("https://61c721e79031850017547308.mockapi.io/cartItems");
+      const favResponse = await axios.get("https://61c721e79031850017547308.mockapi.io/favoritesItems");
+
+      setIsReady(false);
+
+      setCartItems(cartResponse.data);
+      setFavorites(favResponse.data);  
+      setShoes(shoesResponse.data);
+    }
+
+    fetchData();
   }, []);
   
   React.useEffect(() => {
@@ -27,42 +44,74 @@ function App() {
   }, [cartOpened]);
 
   const onAddToCart = (obj) => {
-    setCartItems(prev => [...prev, obj]);
+    console.log(obj);
+
+    if (cartItems.find((item) => item.id === obj.id)) {
+      axios.delete(`https://61c721e79031850017547308.mockapi.io/cartItems/${obj.id}`);
+      setCartItems((prev) => prev.filter((item) => item.id !== obj.id));
+    }
+    else {
+      axios.post("https://61c721e79031850017547308.mockapi.io/cartItems", obj);
+      setCartItems((prev) => [...prev, obj]);
+    }
   };
-  
+
+  const onRemoveItem = (id) => {
+    axios.delete(`https://61c721e79031850017547308.mockapi.io/cartItems/${id}`);
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const onAddToFavorite = async (obj) => {  
+    console.log(obj);
+    
+    try {
+      if (favorites.find(favObj => favObj.id === obj.id)) {
+      axios.delete(`https://61c721e79031850017547308.mockapi.io/favoritesItems/${obj.id}`);
+      }
+      else {
+        const { data } = await axios.post("https://61c721e79031850017547308.mockapi.io/favoritesItems", obj);
+        setFavorites(prev => [...prev, data]);
+      }
+    } 
+    catch (error) {
+      alert("Не удалось добавить в избранное");
+    }
+  };  
+
+  const onChangeSearchInput = (e) => {
+    setSearchValue(e.target.value);
+  };
+
   return (
     <div className="wrapper">
 
       <Header onClickCart={() => setCartOpened(true)}/>
-      {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} />}
+      
+      {cartOpened && <Drawer items={cartItems} 
+                             onClose={() => setCartOpened(false)} 
+                             onRemove={onRemoveItem} />}
 
-      <main className="content">
-        <h1 className="sr-only">
-          REACT SNEAKERS - Магазин лучших кроссовок
-        </h1>
+      <Routes>
+        <Route path="/" exact element={
+          <Home shoes={shoes}
+                cartItems={cartItems}
+                searchValue={searchValue}
+                setSearchValue={setSearchValue} 
+                onChangeSearchInput={onChangeSearchInput}  
+                onAddToCart={onAddToCart}  
+                onAddToFavorite={onAddToFavorite}
+                isReady={isReady}
+          />
+        }>         
+        </Route>
 
-        <div className="content__top d-flex align-center justify-between">
-          <h2 className="content__title">
-            Все кроссовки
-          </h2>
-          <label className="content__search-label">
-            <img className="content__search-icon" src="img/search.svg" alt="Search icon" aria-hidden="true" />
-            <input className="content__search" type="search" name="search" id="search" placeholder="Поиск..." />
-          </label>
-        </div>
-
-        <ul className="content__block">          
-          {shoes.map(obj => 
-            <Card 
-              title={obj.title} 
-              price={obj.price} 
-              imgUrl={obj.imgUrl}
-              addToCart={(obj) => onAddToCart(obj)}
-              addToFav={() => console.log("Добавили в избранное")}
-            />
-          )}
-        </ul>
-      </main>
+        <Route path="/favorites" exact element={
+          <Favorites shoes={favorites} 
+                     onAddToFavorite={onAddToFavorite}
+          />
+        }>
+        </Route>
+      </Routes>
 
     </div>
   );

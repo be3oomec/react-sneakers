@@ -1,7 +1,10 @@
+import React from 'react';
+import axios from 'axios';
+
 import styles from './Drawer.scss'
 import styleCard from './Mini-card.scss'
 
-function Drawer({ items = [], onClose }) {
+function Drawer({ onClose, onRemove, items = [] }) {
   return (  
     <div className="overlay">
       <div className="overlay__drawer drawer">
@@ -20,26 +23,29 @@ function Drawer({ items = [], onClose }) {
 
         <ul className="drawer__items">
           {items.map((obj) => 
-            <li className="drawer__item">
+            <li key={obj.id} className="drawer__item">
               <article className="mini-card d-flex align-center justify-between">
                 <div className="mini-card__img">
-                  <img src={obj.imgUrl} alt="Sneakers image" width={70} height={70} />
+                  <img src={obj.imgUrl} alt="Sneakers shoes" width={70} height={70} />
                 </div>
                 <div className="mini-card__info">
                   <h3 className="mini-card__title">
                     {obj.title}
                   </h3>
                   <span className="mini-card__price">
-                   {obj.price}
+                   {`${obj.price} rub.`}
                   </span>
                 </div>
-                <button className="mini-card__btn" aria-label="delete item">
+                <button className="mini-card__btn" 
+                        aria-label="delete item" 
+                        type='button'
+                        onClick={() => onRemove(obj.id)}  >
                   <svg className="mini-card__icon">
                     <use xlinkHref="img/sprite.svg#close"></use>
                   </svg>
                 </button>
               </article>
-            </li>
+            </li>           
           )}
         </ul>
       
