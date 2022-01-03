@@ -5,9 +5,10 @@ import axios from 'axios';
 import Header from './components/Header';
 import Drawer from './components/Drawer';
 
+import AppContext from './context';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
-import AppContext from './context';
+import Orders from './pages/Orders';
 
 
 
@@ -90,7 +91,16 @@ function App() {
   }
 
   return (
-    <AppContext.Provider value={{ shoes, cartItems, setCartItems, favorites, isAddedItems, onAddToFavorite, setCartOpened }} >
+    <AppContext.Provider value={{
+      shoes,
+      cartItems,
+      setCartItems,
+      favorites,
+      isAddedItems,
+      onAddToFavorite,
+      onAddToCart,
+      setCartOpened
+    }} >
       <div className="wrapper">
 
         <Header onClickCart={() => setCartOpened(true)} />
@@ -115,6 +125,11 @@ function App() {
 
           <Route path="/favorites" exact element={
             <Favorites />
+          }>
+          </Route>
+
+          <Route path="/orders" exact element={
+            <Orders />
           }>
           </Route>
         </Routes>

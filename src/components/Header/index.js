@@ -37,11 +37,13 @@ function Header(props) {
             </Link>
           </li>
           <li className="header__item">
-            <button className="header__btn header__btn--acc" aria-label="Link on login" type='button'>
-              <svg className="header__icon">
-                <use xlinkHref="img/sprite.svg#user"></use>
-              </svg>
-            </button>
+            <Link to="/orders">
+              <button className="header__btn header__btn--acc" aria-label="Link on login" type='button'>
+                <svg className="header__icon">
+                  <use xlinkHref="img/sprite.svg#user"></use>
+                </svg>
+              </button>
+            </Link>
           </li>
         </ul>
       </div>

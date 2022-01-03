@@ -51,18 +51,21 @@ function Card({ id,
               {`${price} rub.`}
             </span>
 
+            {addToFav &&  
             <button className={favorites ? "card__btn card__btn--fav card__btn--fav-active" : "card__btn card__btn--fav"} aria-label="Add to favorites"
               onClick={onClickFav}>
               <svg className="card__icon card__icon--fav">
                 <use xlinkHref="img/sprite.svg#fav2"></use>
               </svg>
-            </button>
+            </button>}
+
+            {addToCart &&
             <button className={isAddedItems(id) ? "card__btn card__btn--add card__btn--cheaked" : "card__btn card__btn--add"} aria-label="Add to cart"
               onClick={onClickPlus}>
               <svg className="card__icon card__icon--add">
                 <use xlinkHref={isAddedItems(id) ? "img/sprite.svg#check" : "img/sprite.svg#plus"}></use>
               </svg>
-            </button>
+            </button>}
           </article>
       }
     </li>
