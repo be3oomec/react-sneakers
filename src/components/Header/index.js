@@ -1,8 +1,13 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 
+import AppContext from '../../context';
 import styles from './Header.scss'
 
 function Header(props) {
+  const {cartItems} = React.useContext(AppContext);
+  const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
+
   return (
     <header className="header">
       <div className="header__inner d-flex align-center justify-between">
@@ -19,7 +24,7 @@ function Header(props) {
                 <use xlinkHref="img/sprite.svg#cart"></use>
               </svg>
               <span className="header__btn-text">
-                12999 руб.
+                {totalPrice} rub.
               </span>
             </button>
           </li>

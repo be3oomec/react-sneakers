@@ -15,6 +15,8 @@ function Drawer({ onClose, onRemove, items = [] }) {
   const [orderId, setOrderId] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
+
   const onClickOrder = async () => {
     try {
       setIsLoading(true);
@@ -90,7 +92,7 @@ function Drawer({ onClose, onRemove, items = [] }) {
                     </span>
                     <span className="drawer__decor"></span>
                     <span className="drawer__cost">
-                      21498 руб.
+                      {totalPrice} rub.
                     </span>
                   </div>
 
@@ -100,7 +102,7 @@ function Drawer({ onClose, onRemove, items = [] }) {
                     </span>
                     <span className="drawer__decor"></span>
                     <span className="drawer__tax-value">
-                      1074 руб.
+                      {totalPrice * 0.05} rub.
                     </span>
                   </div>
 
