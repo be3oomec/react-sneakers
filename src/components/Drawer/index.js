@@ -1,21 +1,19 @@
 import React from 'react';
 import axios from 'axios';
 
-import AppContext from '../../context';
-import Info from '../Info/info'
-import styles from './Drawer.scss'
-import styleCard from './Mini-card.scss'
+import Info from '../Info/info';
+import styles from './Drawer.scss';
+import styleCard from './Mini-card.scss';
+import {useCart} from '../../hooks/useCart';
 
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 function Drawer({ onClose, onRemove, items = [] }) {
-  const { cartItems, setCartItems } = React.useContext(AppContext);
   const [orderComplete, setOrderComplete] = React.useState(false);
   const [orderId, setOrderId] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
-
-  const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
+  const {cartItems, setCartItems, totalPrice} = useCart();
 
   const onClickOrder = async () => {
     try {
