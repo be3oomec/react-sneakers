@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import styles from './Header.scss'
 
@@ -7,14 +7,14 @@ function Header(props) {
     <header className="header">
       <div className="header__inner d-flex align-center justify-between">
         <Link to="/">
-          <img className="logo__image" src="img/logo.svg" alt="Logo react Sneakers" width={245} height={41}/>
+          <img className="logo__image" src="img/logo.svg" alt="Logo react Sneakers" width={245} height={41} />
         </Link>
 
         <ul className="header__list d-flex align-start">
           <li className="header__item">
-            <button className="header__btn header__btn--cart d-flex align-end" 
-                    aria-label="Link on cart" 
-                    onClick={props.onClickCart}>
+            <button className="header__btn header__btn--cart d-flex align-end"
+              aria-label="Link on cart"
+              onClick={props.onClickCart}>
               <svg className="header__icon">
                 <use xlinkHref="img/sprite.svg#cart"></use>
               </svg>
@@ -39,7 +39,7 @@ function Header(props) {
               </svg>
             </button>
           </li>
-        </ul>           
+        </ul>
       </div>
     </header>
   );
