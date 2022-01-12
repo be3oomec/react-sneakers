@@ -23,15 +23,22 @@ function App() {
 
   React.useEffect(() => {
     async function fetchData() {
-      const shoesResponse = await axios.get("https://61c721e79031850017547308.mockapi.io/shoes");
-      const cartResponse = await axios.get("https://61c721e79031850017547308.mockapi.io/cartItems");
-      const favResponse = await axios.get("https://61c721e79031850017547308.mockapi.io/favoritesItems");
+      try {
+        const [shoesResponse, cartResponse, favResponse] = await Promise.all([
+          axios.get("https://61c721e79031850017547308.mockapi.io/shoes"),
+          axios.get("https://61c721e79031850017547308.mockapi.io/cartItems"),
+          axios.get("https://61c721e79031850017547308.mockapi.io/favoritesItems"),
+        ]);
 
-      setIsReady(false);
+        setIsReady(false);
 
-      setCartItems(cartResponse.data);
-      setFavorites(favResponse.data);
-      setShoes(shoesResponse.data);
+        setCartItems(cartResponse.data);
+        setFavorites(favResponse.data);
+        setShoes(shoesResponse.data);
+      } catch (error) {
+        alert('Ошибка при запросе данных');
+        console.error(error);
+      }
     }
 
     fetchData();
@@ -47,21 +54,29 @@ function App() {
   }, [cartOpened]);
 
   const onAddToCart = (obj) => {
-    console.log(obj);
-
-    if (cartItems.find((item) => item.id === obj.id)) {
-      axios.delete(`https://61c721e79031850017547308.mockapi.io/cartItems/${obj.id}`);
-      setCartItems((prev) => prev.filter((item) => item.id !== obj.id));
-    }
-    else {
-      axios.post("https://61c721e79031850017547308.mockapi.io/cartItems", obj);
-      setCartItems((prev) => [...prev, obj]);
+    try {
+      if (cartItems.find((item) => item.id === obj.id)) {
+        setCartItems((prev) => prev.filter((item) => item.id !== obj.id));
+        axios.delete(`https://61c721e79031850017547308.mockapi.io/cartItems/${obj.id}`);
+      }
+      else {
+        setCartItems((prev) => [...prev, obj]);
+        axios.post("https://61c721e79031850017547308.mockapi.io/cartItems", obj);
+      }
+    } catch (error) {
+      alert('Ошибка при добавлении в корзину');
+      console.error(error);
     }
   };
 
   const onRemoveItem = (id) => {
-    axios.delete(`https://61c721e79031850017547308.mockapi.io/cartItems/${id}`);
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+    try {
+      axios.delete(`https://61c721e79031850017547308.mockapi.io/cartItems/${id}`);
+      setCartItems((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      alert('Ошибка при удалении из корзины');
+      console.error(error);
+    }
   };
 
   const onAddToFavorite = async (obj) => {
@@ -79,6 +94,7 @@ function App() {
     }
     catch (error) {
       alert("Не удалось добавить в избранное");
+      console.error(error);
     }
   };
 
