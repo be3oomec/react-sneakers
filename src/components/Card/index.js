@@ -16,13 +16,14 @@ function Card({ id,
 
   const { isAddedItems } = React.useContext(AppContext);
   const [favorites, setFavorites] = React.useState(favorited);
+  const obj = { id, parentId: id, title, price, imgUrl };
 
   const onClickPlus = () => {
-    addToCart({ id, title, price, imgUrl });
+    addToCart(obj);
   };
 
   const onClickFav = () => {
-    addToFav({ id, title, price, imgUrl });
+    addToFav(obj);
     setFavorites(!favorites);
   };
 
